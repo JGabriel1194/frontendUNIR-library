@@ -14,7 +14,6 @@ const ReservedList = () => {
         {books.length > 0 ? (
           <div className="container-fluid">
             <div className="row">
-              
               <div className="col-12">
                 <Title title="Libros prestados"></Title>
                 <div className="row m-2 p-1">
