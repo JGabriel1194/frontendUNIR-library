@@ -1,0 +1,7 @@
+.title-border {
+    border-bottom: 2px solid #cecece; /* Cambia el color y el grosor del borde según tus necesidades */
+}
+.align-right {
+    display: flex;
+    justify-content: flex-end;
+}

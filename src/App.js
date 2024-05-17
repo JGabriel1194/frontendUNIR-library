@@ -1,24 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
+import GlobalRouter from './routes/GlobalRouter';
+import { useBook } from './hooks/useBook';
+import BookContext from './contexts/BookContext';
 
 function App() {
+
+  const books = useBook();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BookContext.Provider value={{ books }}>
+      <GlobalRouter/>
+    </BookContext.Provider>
   );
 }
 

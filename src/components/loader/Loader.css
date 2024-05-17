@@ -1,0 +1,21 @@
+.loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff; /* Fondo sólido negro */
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: .3em;
+    border-top-color: #f00; /* Color rojo */
+    border-right-color: #0f0; /* Color verde */
+    border-bottom-color: #00f; /* Color azul */
+    border-left-color: #ff0; /* Color amarillo */
+}
