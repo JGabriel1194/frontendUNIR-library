@@ -7,6 +7,10 @@ import Loader from "../components/loader/Loader";
 
 const Libros = () => {
 
+  const [page, setPage] = useState(0);
+
+  const { books, aggregations, loading } = useBook(page);
+
   const [titutlo, setTitulo] = useState('');
   const [autor, setAutor] = useState('');
 
@@ -22,10 +26,6 @@ const Libros = () => {
     console.log('Titulo: ', titutlo);
     console.log('Autor: ', autor);
   };
-
-  const [page, setPage] = useState(0);
-
-  const { books, aggregations, loading } = useBook(page);
 
   return (
     <div className="container-fliud">
