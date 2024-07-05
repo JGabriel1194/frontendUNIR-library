@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import Title from "../components/tittle/Title";
-import { useBook } from "../hooks/useBook";
+import { useBooks } from "../hooks/useBooks";
 import BookCard from "../components/bookcard/BookCard";
 import CategoryList from "../components/categorylist/CategoryList";
 import Loader from "../components/loader/Loader";
@@ -9,7 +9,7 @@ const Libros = () => {
 
   const [page, setPage] = useState(0);
 
-  const { books, aggregations, loading } = useBook(page);
+  const { books, aggregations, loading } = useBooks(page);
 
   return (
     <div className="container-fliud">
@@ -18,7 +18,6 @@ const Libros = () => {
           <div className="row">
             <div className="col-12 col-md-3">
               <Title title="Libros"></Title>
-
               <div className="col-12">
                 {loading ? <p>Cargando...</p> :
                   <CategoryList aggregations={aggregations.generoValues} />

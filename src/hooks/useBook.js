@@ -1,57 +1,38 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from 'react';
 import axios from "axios";
 
-const useBook = (page = 0) => {
-  const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [aggregations, setAggregations] = useState({});
+const API_URL = process.env.REACT_APP_API_URL;
 
-  const API_URL = process.env.REACT_APP_API_URL;
-  const url = `${API_URL}/ms-buscador/api/libros`;
+const useBook = (bookId = "") => {
+    const [book, setBook] = useState();
+    const [loading, setLoading] = useState(true);
 
-  const fetchBooks = useCallback(async () => {
-    try {
-      const response = await axios.post(
-        url,
-        {
-          targetMethod: "GET",
-          queryParams: {
-            page: [page],
-          },
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          cors: "no-cors",
-        }
-      );
-      setLoading(false);
-      setBooks(response.data.libros);
-      setAggregations(response.data.aggs);
-    } catch (error) {
-      setLoading(false);
-      console.error(error);
-    }
-  }, [url, page]);
+    useEffect(() => {
+        (async () => {
+            try {
+                const response = await axios.post(
+                    `${API_URL}/ms-buscador/api/libros/${bookId}`,
+                    {
+                        targetMethod: "GET"
+                    },
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        cors: "no-cors",
+                    }
+                );
+                setLoading(false);
+                setBook(response.data);
+            } catch (error) {
+                setLoading(false);
+                console.error(error);
+            }
+        })();
+    }, [bookId]);
 
-  useEffect(() => {
-    fetchBooks();
-  }, [fetchBooks]);
+    return { book, loading };
 
-
-  return { books, aggregations, loading };
 }
 
 export { useBook }
-
-
-// autor: "Fulano";
-// edicion: 4;
-// editorial: "Patito";
-// fechaPublicacion: "2024-07-04";
-// genero: "Fantasia";
-// id: "qnf6e5ABhbHMfDY1pyPA";
-// isbn: "123";
-// portada: "/public/portadas/1.png";
-// titulo: "Prueba Titulo";

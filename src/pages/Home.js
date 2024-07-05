@@ -3,7 +3,7 @@ import Carousel from '../components/carousel/Carousel';
 import { useCarousel } from '../hooks/useCarousel';
 import CarouselContext from '../contexts/CarouselContext';
 import Title from '../components/tittle/Title';
-import { useBook } from '../hooks/useBook';
+import { useBooks } from '../hooks/useBooks';
 import BookCard from '../components/bookcard/BookCard'
 import { useCategory } from '../hooks/useCategory';
 import CategoryCard from '../components/categorycard/CategoryCard';
@@ -11,7 +11,7 @@ import Loader from '../components/loader/Loader';
 const Home = () => {
 
   const carousel = useCarousel();
-  const { books } = useBook();
+  const { books } = useBooks();
   const categories = useCategory();
 
   return (
