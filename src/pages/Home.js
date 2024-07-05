@@ -36,9 +36,9 @@ const Home = () => {
             </div>
             <div className="row m-2 p-1">
               {books.map((book, index) => {
-                if (book.popularidad > 9.6) {
+                // if (book.popularidad > 9.6) {
                   return <BookCard key={index} book={book} />;
-                }
+                // }
               })}
             </div>
           </div>

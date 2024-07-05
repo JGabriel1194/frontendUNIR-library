@@ -11,10 +11,10 @@ const BookCard = ({book}) => {
             alt="..."
           />
           <div className="card-body">
-            <h5 className="card-title">{book.nombre}</h5>
+            <h5 className="card-title">{book.titulo}</h5>
             <p className="card-text">
               Autor: {book.autor} <br />
-              Año: {book.año_publicacion}
+              Año: {book.fechaPublicacion}
             </p>
             <Link to={`/libros/${book.id}`} className="btn btn-primary">
               Ver detalle
