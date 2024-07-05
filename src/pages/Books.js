@@ -16,6 +16,22 @@ const Libros = () => {
 
   const { books, aggregations, loading } = useBooks(page, genero);
 
+  const [titutlo, setTitulo] = useState('');
+  const [autor, setAutor] = useState('');
+
+  const handleInput1Change = (event) => {
+    setTitulo(event.target.value);
+  };
+
+  const handleInput2Change = (event) => {
+    setAutor(event.target.value);
+  };
+
+  const handleButtonClick = () => {
+    console.log('Titulo: ', titutlo);
+    console.log('Autor: ', autor);
+  };
+
   return (
     <div className="container-fliud">
       {books.length > 0 ? (
@@ -23,12 +39,22 @@ const Libros = () => {
           <div className="row">
             <div className="col-12 col-md-3">
               <Title title="Filtros"></Title>
+              <div>
+                <div>
+                  <label htmlFor="titulo">Título</label>
+                  <input type="text" id="titulo" value={titutlo} onChange={handleInput1Change} />
+                </div>
+                <div>
+                  <label htmlFor="autor">Autor</label>
+                  <input type="text" id="autor" value={autor} onChange={handleInput2Change} />
+                </div>
+                <button onClick={handleButtonClick}>Filtrar</button>
+              </div>
               <div className="col-12">
                 {loading ? <p>Cargando...</p> : <div>
                   <CategoryList aggregations={aggregations.generoValues} onGenero={handleGeneroChange} />
                   {genero && <button className="btn btn-primary" onClick={() => setGenero('')}>Limpiar filtros</button>}
-                </div>
-                }
+                </div>}
               </div>
             </div>
             <div className="col-12 col-md-9">
