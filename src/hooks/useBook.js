@@ -3,6 +3,8 @@ import axios from "axios";
 
 const useBook = (page = 0) => {
   const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [aggregations, setAggregations] = useState({});
 
   const API_URL = process.env.REACT_APP_API_URL;
   const url = `${API_URL}/ms-buscador/api/libros`;
@@ -24,9 +26,12 @@ const useBook = (page = 0) => {
           cors: "no-cors",
         }
       );
+      setLoading(false);
       setBooks(response.data.libros);
+      setAggregations(response.data.aggs);
     } catch (error) {
-      console.log(error);
+      setLoading(false);
+      console.error(error);
     }
   }, [url, page]);
 
@@ -35,7 +40,7 @@ const useBook = (page = 0) => {
   }, [fetchBooks]);
 
 
-  return { books };
+  return { books, aggregations, loading };
 }
 
 export { useBook }

@@ -2,17 +2,14 @@ import { React, useState } from "react";
 import Title from "../components/tittle/Title";
 import { useBook } from "../hooks/useBook";
 import BookCard from "../components/bookcard/BookCard";
-import CategoryContext from "../contexts/CategoryContext";
 import CategoryList from "../components/categorylist/CategoryList";
-import { useCategory } from "../hooks/useCategory";
 import Loader from "../components/loader/Loader";
 
 const Libros = () => {
 
   const [page, setPage] = useState(0);
 
-  const { books } = useBook(page);
-  const categories = useCategory();
+  const { books, aggregations, loading } = useBook(page);
 
   return (
     <div className="container-fliud">
@@ -21,11 +18,12 @@ const Libros = () => {
           <div className="row">
             <div className="col-12 col-md-3">
               <Title title="Libros"></Title>
-              <CategoryContext.Provider value={{ categories }}>
-                <div className="col-12">
-                  <CategoryList />
-                </div>
-              </CategoryContext.Provider>
+
+              <div className="col-12">
+                {loading ? <p>Cargando...</p> :
+                  <CategoryList aggregations={aggregations.generoValues} />
+                }
+              </div>
             </div>
             <div className="col-12 col-md-9">
               <Title title="Libros"></Title>
@@ -35,7 +33,7 @@ const Libros = () => {
                 })}
               </div>
             </div>
-            <button class="btn btn-info" onClick={() => setPage(prev => prev + 1)}>Mas</button>
+            <button className="btn btn-info" onClick={() => setPage(prev => prev + 1)}>Mas</button>
           </div>
         </div>
       ) : (

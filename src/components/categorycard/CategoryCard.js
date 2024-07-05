@@ -6,10 +6,10 @@ const CategoryCard = ({ category }) => {
     return (
         <div className="col-12 col-md-3">
             <div className="card mb-2">
-                <div class="card-body">
-                <h3 class="card-title">{category.nombre}</h3>
-                <p class="card-text">{category.descripcion}</p>
-                <Link href="#" class="btn btn-primary">Button</Link>
+                <div className="card-body">
+                <h3 className="card-title">{category.nombre}</h3>
+                <p className="card-text">{category.descripcion}</p>
+                <Link href="#" className="btn btn-primary">Button</Link>
             </div>
             </div>
         </div>

@@ -1,28 +1,24 @@
-import React, { useContext } from "react";
-import CategoryContext from "../../contexts/CategoryContext";
-import { Link } from "react-router-dom";
+import './CategoryList.css';
 
-const CategoryList = () => {
+const CategoryList = ({ aggregations = [] }) => {
 
-    const { categories } = useContext(CategoryContext);
-    console.log(categories);
-    return (
-      <div class="list-group">
-        {
-            categories.map((category, index) => {
-                return (
-                  <Link
-                    key={index}
-                    to={"/"}
-                    class="list-group-item list-group-item-action"
-                  >
-                    {category.nombre}
-                  </Link>
-                );
-            })
-        }
-      </div>
-    );
+  console.log(aggregations);
+  return (
+    <div className="list-group">
+      {aggregations.length > 0 ? (
+        aggregations.map((agg, index) => (
+          <li key={index} className="list-group-item d-flex justify-content-between align-items-start">
+            <div className="ms-2 me-auto pointer" onClick={() => { }}>
+              <div className="fw-bold">{agg.key}</div>
+            </div>
+            <span className="badge bg-primary rounded-pill pointer" onClick={() => { }}>{agg.count}</span>
+          </li>
+        ))
+      ) : (
+        <p>Cargando..</p>
+      )}
+    </div>
+  );
 }
 
 export default CategoryList;
