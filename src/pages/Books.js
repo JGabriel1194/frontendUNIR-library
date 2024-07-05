@@ -8,8 +8,13 @@ import Loader from "../components/loader/Loader";
 const Libros = () => {
 
   const [page, setPage] = useState(0);
+  const [genero, setGenero] = useState('');
 
-  const { books, aggregations, loading } = useBooks(page);
+  const handleGeneroChange = (childData) => {
+    setGenero(childData);
+  };
+
+  const { books, aggregations, loading } = useBooks(page, genero);
 
   return (
     <div className="container-fliud">
@@ -17,10 +22,12 @@ const Libros = () => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-12 col-md-3">
-              <Title title="Libros"></Title>
+              <Title title="Filtros"></Title>
               <div className="col-12">
-                {loading ? <p>Cargando...</p> :
-                  <CategoryList aggregations={aggregations.generoValues} />
+                {loading ? <p>Cargando...</p> : <div>
+                  <CategoryList aggregations={aggregations.generoValues} onGenero={handleGeneroChange} />
+                  {genero && <button className="btn btn-primary" onClick={() => setGenero('')}>Limpiar filtros</button>}
+                </div>
                 }
               </div>
             </div>
