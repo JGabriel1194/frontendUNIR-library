@@ -1,42 +1,44 @@
-import { useEffect,useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 
-const useBook = () => {
-    const [books, setBooks] = useState([]);
+const useBook = (page = 0) => {
+  const [books, setBooks] = useState([]);
 
-    const API_URL = process.env.REACT_APP_API_URL;
-    
-    useEffect(() => {
-        fetchBooks();
-    }, []);
-    
-      const fetchBooks = async () => {
-        try {
-          const response = await axios.post(
-            `${API_URL}/ms-buscador/api/libros`,
-              {
-                targetMethod: "GET",
-                queryParams: {
-                  page: [0],
-              },
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-              cors: "no-cors",
-            }
-          );
-          setBooks(response.data.libros);
-        } catch (error) {
-          console.log(error);
+  const API_URL = process.env.REACT_APP_API_URL;
+  const url = `${API_URL}/ms-buscador/api/libros`;
+
+  const fetchBooks = useCallback(async () => {
+    try {
+      const response = await axios.post(
+        url,
+        {
+          targetMethod: "GET",
+          queryParams: {
+            page: [page],
+          },
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          cors: "no-cors",
         }
-      }
+      );
+      setBooks(response.data.libros);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [url, page]);
 
-    return books;
+  useEffect(() => {
+    fetchBooks();
+  }, [fetchBooks]);
+
+
+  return { books };
 }
 
-export {useBook}
+export { useBook }
 
 
 // autor: "Fulano";

@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import Title from "../components/tittle/Title";
 import { useBook } from "../hooks/useBook";
 import BookCard from "../components/bookcard/BookCard";
@@ -8,8 +8,10 @@ import { useCategory } from "../hooks/useCategory";
 import Loader from "../components/loader/Loader";
 
 const Libros = () => {
-  
-  const books = useBook();
+
+  const [page, setPage] = useState(3);
+
+  const { books } = useBook(page);
   const categories = useCategory();
 
   return (
@@ -33,6 +35,7 @@ const Libros = () => {
                 })}
               </div>
             </div>
+            <button class="btn btn-info" onClick={() => setPage(prev => prev + 1)}>Mas</button>
           </div>
         </div>
       ) : (
