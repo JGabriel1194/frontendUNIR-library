@@ -9,7 +9,7 @@ import Loader from "../components/loader/Loader";
 
 const Libros = () => {
 
-  const [page, setPage] = useState(3);
+  const [page, setPage] = useState(0);
 
   const { books } = useBook(page);
   const categories = useCategory();
