@@ -121,7 +121,7 @@ const Libros = () => {
               </div>
               <div className="row m-2 p-1">
                 {books.map((book, index) => {
-                  return <BookCard key={index} book={book} />;
+                  return <BookCard key={index} book={book} state={'disponible'} />;
                 })}
               </div>
             </div>

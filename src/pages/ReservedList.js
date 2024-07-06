@@ -16,7 +16,7 @@ const ReservedList = () => {
                 <Title title="Libros prestados"></Title>
                 <div className="row m-2 p-1">
                   {books.map((book, index) => {
-                    return <BookCard key={index} book={book.libro} />;
+                    return <BookCard key={index} book={book.libro} state={'reserved'} detalle={book} />;
                   })}
                 </div>
               </div>
