@@ -1,22 +1,74 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BookContext from "../contexts/BookContext";
 import Title from "../components/tittle/Title";
-import BookCard from "../components/bookcard/BookCard";
 import Loader from "../components/loader/Loader";
 import { useBook } from "../hooks/useBook";
+import DatePicker from "react-datepicker";
+import { Modal } from "bootstrap";
+
+import "react-datepicker/dist/react-datepicker.css";
+import axios from "axios";
+import { error } from "jquery";
 
 const BookDetail = () => {
 
   const { bookId } = useParams();
   // const { books } = useContext(BookContext);
+  const [startDate, setStartDate] = useState(new Date());
 
+  const URL = process.env.REACT_APP_API_URL;
 
   const { book, loading } = useBook(bookId);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [book]);
+
+  const saveReservation = async () => {
+    const response = await axios.post(`${URL}/ms-operador/api/v1/detalles`, 
+      {
+        targetMethod: "POST",
+        body: {
+          libro: {
+            id: bookId,
+          },
+          prestamo: {
+            id: 1,
+          },
+          fecha_retorno: startDate.toISOString(),
+        }
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        cors: "no-cors",
+      })
+      
+      if (response) {
+        console.log('Respuesta',response);
+        hideReservationModal();
+      }else{
+        error("Error al reservar el libro");
+      }
+  }
+
+  const showReservationModal = () => {
+    const modalElement = document.getElementById("exampleModal");
+    const modalInstance = new Modal(modalElement);
+    if (modalInstance) {
+      modalInstance.show();
+    }
+  }
+
+  const hideReservationModal = () => {
+    const modalElement = document.getElementById("exampleModal");
+    const modalInstance = Modal.getInstance(modalElement);
+    if (modalInstance) {
+      modalInstance.hide();
+    }
+  }
 
   return (
     <div className="container-fluid">
@@ -47,8 +99,7 @@ const BookDetail = () => {
               <button
                 type="button"
                 className="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
+                onClick={showReservationModal}
               >
                 Reservar Libro
               </button>
@@ -72,7 +123,7 @@ const BookDetail = () => {
             aria-labelledby="exampleModalLabel"
             aria-hidden="true"
           >
-            <div className="modal-dialog">
+            <div className="modal-dialog modal-dialog-centered">
               <div className="modal-content">
                 <div className="modal-header">
                   <button
@@ -83,7 +134,15 @@ const BookDetail = () => {
                   ></button>
                 </div>
                 <div className="modal-body">
-                    Desea reservar este libro?
+                  <label for="fechaReserva" className="form-label">
+                    Fecha de devolución:
+                  </label>
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                    className="form-control"
+                    id="fechaReserva"
+                  />
                 </div>
                 <div className="modal-footer">
                   <button
@@ -93,7 +152,11 @@ const BookDetail = () => {
                   >
                     Cancelar
                   </button>
-                  <button type="button" className="btn btn-success">
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={saveReservation}
+                  >
                     Aceptar
                   </button>
                 </div>

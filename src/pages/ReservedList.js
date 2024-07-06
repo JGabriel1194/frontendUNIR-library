@@ -16,12 +16,10 @@ const ReservedList = () => {
                 <Title title="Libros prestados"></Title>
                 <div className="row m-2 p-1">
                   {books.map((book, index) => {
-                    console.log('LIBROOOOOXS ',book.libro);
                     return <BookCard key={index} book={book.libro} />;
                   })}
                 </div>
               </div>
-              
             </div>
           </div>
         ) : (
