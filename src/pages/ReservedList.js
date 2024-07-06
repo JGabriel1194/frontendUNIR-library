@@ -23,12 +23,6 @@ const ReservedList = () => {
                   })}
                 </div>
               </div>
-              <button
-                className="btn btn-info"
-                onClick={() => setPage((prev) => prev + 1)}
-              >
-                Mas
-              </button>
             </div>
           </div>
         ) : (
