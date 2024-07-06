@@ -9,7 +9,7 @@ const CategoryCard = ({ category }) => {
                 <div className="card-body">
                 <h3 className="card-title">{category.nombre}</h3>
                 <p className="card-text">{category.descripcion}</p>
-                <Link href="#" className="btn btn-primary">Button</Link>
+                <Link href="#" className="btn btn-primary" to={}>Ver más</Link>
             </div>
             </div>
         </div>

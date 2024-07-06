@@ -24,7 +24,7 @@ const Home = () => {
             </CarouselContext.Provider>
           </div>
           <div className="row">
-            <Title title="Categorias"></Title>
+            <Title title="Categorías"></Title>
           </div>
           <div className="row m-2 p-1">
             {categories.map((category, index) => {
@@ -32,7 +32,7 @@ const Home = () => {
             })}
           </div>
           <div className="row">
-            <Title title="Mas populares"></Title>
+            <Title title="Más Populares"></Title>
           </div>
 
           <div className="row m-2 p-1">
