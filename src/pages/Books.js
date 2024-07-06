@@ -19,20 +19,24 @@ const Libros = () => {
   const { books, aggregations, fetchBooks, loading } = useBooks({ genero, titulo, autor, page });
 
   const handleTituloFilter = (event) => {
+    setPage(0);
     setTitulo(event.target.value);
   };
 
   const handleAutorFilter = (event) => {
+    setPage(0);
     setAutor(event.target.value);
   };
 
   const onCleanFilters = () => {
+    setPage(0);
     setTitulo('');
     setGenero('');
     setAutor('');
   }
 
   const onSearch = () => {
+    setPage(0);
     fetchBooks();
   };
 
