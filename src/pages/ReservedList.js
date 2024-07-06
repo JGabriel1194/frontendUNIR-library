@@ -6,7 +6,6 @@ import BookCard from "../components/bookcard/BookCard";
 const ReservedList = () => {
 
     const {books} = useReserverdlist();
-    const [page, setPage] = useState(0);
 
     console.log(books);
 
