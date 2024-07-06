@@ -36,7 +36,7 @@ const BookDetail = () => {
           prestamo: {
             id: 1,
           },
-          fecha_retorno: '1949-01-01',
+          fecha_retorno: startDate.toISOString(),
         }
       },
       {
