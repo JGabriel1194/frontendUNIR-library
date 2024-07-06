@@ -7,8 +7,6 @@ const ReservedList = () => {
 
     const {books} = useReserverdlist();
 
-    console.log(books);
-
     return (
       <div className="container-fliud">
         {books.length > 0 ? (
