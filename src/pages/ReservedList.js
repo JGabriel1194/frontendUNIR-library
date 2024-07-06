@@ -6,6 +6,7 @@ import BookCard from "../components/bookcard/BookCard";
 const ReservedList = () => {
 
     const {books} = useReserverdlist();
+    const [page, setPage] = useState(0);
 
     console.log(books);
 
@@ -23,6 +24,12 @@ const ReservedList = () => {
                   })}
                 </div>
               </div>
+              <button
+                className="btn btn-info"
+                onClick={() => setPage((prev) => prev + 1)}
+              >
+                Mas
+              </button>
             </div>
           </div>
         ) : (
