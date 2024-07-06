@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 
-const useBooks = (page = 0, genero = '') => {
+const useBooks = ({ genero = '', titulo = '', autor = '', page = 0 }) => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [aggregations, setAggregations] = useState({});
@@ -9,7 +9,7 @@ const useBooks = (page = 0, genero = '') => {
   const API_URL = process.env.REACT_APP_API_URL;
   const url = `${API_URL}/ms-buscador/api/libros`;
 
-  const fetchBooks = useCallback(async (titulo = '', autor = '') => {
+  const fetchBooks = useCallback(async () => {
     try {
       const response = await axios.post(
         url,
@@ -36,7 +36,7 @@ const useBooks = (page = 0, genero = '') => {
       setLoading(false);
       console.error(error);
     }
-  }, [url, page, genero]);
+  }, [url, autor, titulo, genero, page]);
 
   useEffect(() => {
     fetchBooks();

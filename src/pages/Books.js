@@ -1,5 +1,4 @@
-import { React, useState, useCallback } from "react";
-import debounce from 'just-debounce-it';
+import { React, useState } from "react";
 import Title from "../components/tittle/Title";
 import { useBooks } from "../hooks/useBooks";
 import BookCard from "../components/bookcard/BookCard";
@@ -17,20 +16,14 @@ const Libros = () => {
     setGenero(childData);
   };
 
-  const { books, aggregations, fetchBooks, loading } = useBooks(page, genero);
-
-  const searchDebounce = useCallback(
-    debounce((titulo, autor) => fetchBooks(titulo, autor), 500)
-    , [fetchBooks]);
+  const { books, aggregations, fetchBooks, loading } = useBooks({ genero, titulo, autor, page });
 
   const handleTituloFilter = (event) => {
     setTitulo(event.target.value);
-    searchDebounce(event.target.value, '');
   };
 
   const handleAutorFilter = (event) => {
     setAutor(event.target.value);
-    searchDebounce('', event.target.value);
   };
 
   const onCleanFilters = () => {
@@ -40,7 +33,7 @@ const Libros = () => {
   }
 
   const onSearch = () => {
-    fetchBooks(titulo, autor);
+    fetchBooks();
   };
 
   return (
@@ -110,11 +103,6 @@ const Libros = () => {
             <div className="col-12 col-md-9">
               <Title title="Libros"></Title>
               <div className="row m-2 p-1">
-                {books.map((book, index) => {
-                  return <BookCard key={index} book={book} />;
-                })}
-              </div>
-              <div className="row m-2 p-1">
                 <div>
                   <button
                     className="btn btn-success"
@@ -130,6 +118,11 @@ const Libros = () => {
                     Siguiente
                   </button>
                 </div>
+              </div>
+              <div className="row m-2 p-1">
+                {books.map((book, index) => {
+                  return <BookCard key={index} book={book} />;
+                })}
               </div>
             </div>
           </div>

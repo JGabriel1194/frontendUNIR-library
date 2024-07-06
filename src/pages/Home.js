@@ -11,7 +11,7 @@ import Loader from '../components/loader/Loader';
 const Home = () => {
 
   const carousel = useCarousel();
-  const { books } = useBooks();
+  const { books } = useBooks({ page: 0 });
   const categories = useCategory();
 
   return (
