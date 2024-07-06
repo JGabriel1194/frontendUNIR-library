@@ -25,7 +25,11 @@ const BookDetail = () => {
           <div className="row">
             <div className="col-12 col-md-4">
               <img
-                src={book.portada.length > 0 ? book.portada : "https://covers.openlibrary.org/b/id/14624404-L.jpg"}
+                src={
+                  book.portada.length > 0
+                    ? book.portada
+                    : "https://covers.openlibrary.org/b/id/14624404-L.jpg"
+                }
                 className="img-fluid"
                 alt="..."
               />
@@ -40,6 +44,14 @@ const BookDetail = () => {
                 Descripción: <br />
                 {book.sinopsis}
               </p>
+              <button
+                type="button"
+                className="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                Reservar Libro
+              </button>
             </div>
           </div>
           <div className="row">
@@ -52,6 +64,41 @@ const BookDetail = () => {
           </div>
           <div className="row">
             <Title title="Sugerencias"></Title>
+          </div>
+          <div
+            className="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="modal-body">
+                    Desea reservar este libro?
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-bs-dismiss="modal"
+                  >
+                    Cancelar
+                  </button>
+                  <button type="button" className="btn btn-success">
+                    Aceptar
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
           {/* <div className="row m-2 p-1">
           {books.map((similarBook, index) => {

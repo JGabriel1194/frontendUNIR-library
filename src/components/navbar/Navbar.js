@@ -27,8 +27,8 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" href="#">
-                  Nosotros
+                <Link to="/prestamos" className="nav-link" href="#">
+                  Libros Prestados
                 </Link>
               </li>
             </ul>

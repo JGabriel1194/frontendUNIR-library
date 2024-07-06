@@ -39,22 +39,61 @@ const Libros = () => {
           <div className="row">
             <div className="col-12 col-md-3">
               <Title title="Filtros"></Title>
-              <div>
+              <div className="col-12">
                 <div>
-                  <label htmlFor="titulo">Título</label>
-                  <input type="text" id="titulo" value={titutlo} onChange={handleInput1Change} />
+                  <label htmlFor="titulo" className="form-label">
+                    Título
+                  </label>
+                  <input
+                    type="text"
+                    id="titulo"
+                    className="form-control"
+                    value={titutlo}
+                    onChange={handleInput1Change}
+                  />
                 </div>
                 <div>
-                  <label htmlFor="autor">Autor</label>
-                  <input type="text" id="autor" value={autor} onChange={handleInput2Change} />
+                  <label htmlFor="autor" className="form-label">
+                    Autor
+                  </label>
+                  <input
+                    type="text"
+                    id="autor"
+                    className="form-control"
+                    value={autor}
+                    onChange={handleInput2Change}
+                  />
                 </div>
-                <button onClick={handleButtonClick}>Filtrar</button>
+                <div className="row m-2 p-1">
+                  <button
+                    onClick={handleButtonClick}
+                    className="btn btn-primary"
+                  >
+                    Filtrar
+                  </button>
+                </div>
               </div>
               <div className="col-12">
-                {loading ? <p>Cargando...</p> : <div>
-                  <CategoryList aggregations={aggregations.generoValues} onGenero={handleGeneroChange} />
-                  {genero && <button className="btn btn-primary" onClick={() => setGenero('')}>Limpiar filtros</button>}
-                </div>}
+                {loading ? (
+                  <p>Cargando...</p>
+                ) : (
+                  <div>
+                    <CategoryList
+                      aggregations={aggregations.generoValues}
+                      onGenero={handleGeneroChange}
+                    />
+                    {genero && (
+                      <div className="row m-2 p-1">
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => setGenero("")}
+                        >
+                          Limpiar filtros
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
             <div className="col-12 col-md-9">
@@ -64,8 +103,24 @@ const Libros = () => {
                   return <BookCard key={index} book={book} />;
                 })}
               </div>
+              <div className="row m-2 p-1">
+                <div>
+                  <button
+                    className="btn btn-success"
+                    onClick={() => setPage((prev) => prev - 1)}
+                  >
+                    Anterior
+                  </button>
+                  <span> | </span>
+                  <button
+                    className="btn btn-success"
+                    onClick={() => setPage((prev) => prev + 1)}
+                  >
+                    Siguiente
+                  </button>
+                </div>
+              </div>
             </div>
-            <button className="btn btn-info" onClick={() => setPage(prev => prev + 1)}>Mas</button>
           </div>
         </div>
       ) : (
