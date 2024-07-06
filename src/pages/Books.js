@@ -1,4 +1,5 @@
-import { React, useState } from "react";
+import { React, useState, useCallback } from "react";
+import debounce from 'just-debounce-it';
 import Title from "../components/tittle/Title";
 import { useBooks } from "../hooks/useBooks";
 import BookCard from "../components/bookcard/BookCard";
@@ -8,33 +9,43 @@ import Loader from "../components/loader/Loader";
 const Libros = () => {
 
   const [page, setPage] = useState(0);
+  const [autor, setAutor] = useState('');
   const [genero, setGenero] = useState('');
+  const [titulo, setTitulo] = useState('');
 
   const handleGeneroChange = (childData) => {
     setGenero(childData);
   };
 
-  const { books, aggregations, loading } = useBooks(page, genero);
+  const { books, aggregations, fetchBooks, loading } = useBooks(page, genero);
 
-  const [titutlo, setTitulo] = useState('');
-  const [autor, setAutor] = useState('');
+  const searchDebounce = useCallback(
+    debounce((titulo, autor) => fetchBooks(titulo, autor), 500)
+    , [fetchBooks]);
 
-  const handleInput1Change = (event) => {
+  const handleTituloFilter = (event) => {
     setTitulo(event.target.value);
+    searchDebounce(event.target.value, '');
   };
 
-  const handleInput2Change = (event) => {
+  const handleAutorFilter = (event) => {
     setAutor(event.target.value);
+    searchDebounce('', event.target.value);
   };
 
-  const handleButtonClick = () => {
-    console.log('Titulo: ', titutlo);
-    console.log('Autor: ', autor);
+  const onCleanFilters = () => {
+    setTitulo('');
+    setGenero('');
+    setAutor('');
+  }
+
+  const onSearch = () => {
+    fetchBooks(titulo, autor);
   };
 
   return (
     <div className="container-fliud">
-      {books.length > 0 ? (
+      {!loading ? (
         <div className="container-fluid">
           <div className="row">
             <div className="col-12 col-md-3">
@@ -48,8 +59,8 @@ const Libros = () => {
                     type="text"
                     id="titulo"
                     className="form-control"
-                    value={titutlo}
-                    onChange={handleInput1Change}
+                    value={titulo}
+                    onChange={handleTituloFilter}
                   />
                 </div>
                 <div>
@@ -61,12 +72,12 @@ const Libros = () => {
                     id="autor"
                     className="form-control"
                     value={autor}
-                    onChange={handleInput2Change}
+                    onChange={handleAutorFilter}
                   />
                 </div>
                 <div className="row m-2 p-1">
                   <button
-                    onClick={handleButtonClick}
+                    onClick={onSearch}
                     className="btn btn-primary"
                   >
                     Filtrar
@@ -82,11 +93,11 @@ const Libros = () => {
                       aggregations={aggregations.generoValues}
                       onGenero={handleGeneroChange}
                     />
-                    {genero && (
+                    {(titulo || autor || genero) && (
                       <div className="row m-2 p-1">
                         <button
                           className="btn btn-primary"
-                          onClick={() => setGenero("")}
+                          onClick={onCleanFilters}
                         >
                           Limpiar filtros
                         </button>

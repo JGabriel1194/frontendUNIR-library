@@ -9,13 +9,7 @@ const useBooks = (page = 0, genero = '') => {
   const API_URL = process.env.REACT_APP_API_URL;
   const url = `${API_URL}/ms-buscador/api/libros`;
 
-  const fetchBooks = useCallback(async () => {
-    let params = {};
-    if (genero) {
-      params = {
-        "generos": [genero],
-      };
-    }
+  const fetchBooks = useCallback(async (titulo = '', autor = '') => {
     try {
       const response = await axios.post(
         url,
@@ -23,7 +17,9 @@ const useBooks = (page = 0, genero = '') => {
           targetMethod: "GET",
           queryParams: {
             page: [page],
-            ...params
+            ...(genero && { generos: [genero] }),
+            ...(titulo && { titulo: [titulo] }),
+            ...(autor && { autor: [autor] }),
           },
         },
         {
@@ -47,7 +43,7 @@ const useBooks = (page = 0, genero = '') => {
   }, [fetchBooks]);
 
 
-  return { books, aggregations, loading };
+  return { books, aggregations, fetchBooks, loading };
 }
 
 export { useBooks }
